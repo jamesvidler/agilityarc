@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+    </head>
+    <body>
+        <agility-arc params=""></agility-arc>
+
+        <script id="agility-arc-template" type="text/html">
+
+            <div id="left">
+                
+                <!-- ko if: initialized -->
+                    <h2>Pages</h2>
+                    <ul data-bind="foreach: project().template.pages">
+                        <li>a page</li>
+                    </ul>
+                <!-- /ko --> 
+
+            </div>
+
+            <div id="right">
+                
+            </div>
+
+        </script>
+
+        <script type="text/javascript" src="js/lib/knockout.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.jcrop.js"></script>
+        <script type="text/javascript" src="js/app-component.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>
