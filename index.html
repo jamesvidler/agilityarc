@@ -1,12 +1,21 @@
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-theme.css" />
         <link rel="stylesheet" type="text/css" href="css/app.css" />
     </head>
-    <body>
+    <body class="container">
         <agility-arc params=""></agility-arc>
 
         <script id="agility-arc-template" type="text/html">
-
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active"><a href="#">Item 1</a></li>
+                        <li><a href="#">Item 2</a></li>
+                    </ul>
+                </div>
+            </div>
             <div id="left">
                 
                 <!-- ko if: initialized -->
