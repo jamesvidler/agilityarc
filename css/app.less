@@ -1,9 +1,24 @@
-#left {
-    float: left;
-    width: 50%;
+@import "lib/bootstrap/theme.less";
+
+.container {
+    width: 100%!important;
 }
 
-#right {
-    float: right;
-    width: 50%;
+.sidebar, .properties, canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;       
+}
+
+.sidebar {
+    background: #f1f1f1;
+}
+
+.properties {
+    left: 16.66666667%;
+    background: #cccccc;
+}
+
+.canvas {
+    left: 50%;
 }

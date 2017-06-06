@@ -1,35 +1,60 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-theme.css" />
+        <link rel="stylesheet" type="text/css" href="css/lib/bootstrap/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/lib/bootstrap/theme.css" />
         <link rel="stylesheet" type="text/css" href="css/app.css" />
     </head>
-    <body class="container">
+    <body>
+
         <agility-arc params=""></agility-arc>
 
         <script id="agility-arc-template" type="text/html">
-            <div class="row">
-                <div class="col-sm-12">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="#">Item 1</a></li>
-                        <li><a href="#">Item 2</a></li>
-                    </ul>
+
+            <!-- ko if: initialized -->
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2 sidebar">
+                        <div class="menu">
+                            
+                            <label>Pages</label>
+                            <ul data-bind="foreach: project().template.pages">
+                                <li>a page</li>
+                            </ul>
+
+                            <label>Page Templates</label>
+                            <ul data-bind="foreach: project().template.pageTemplates">
+                                <li>a page template</li>
+                            </ul>
+                            
+                            <label>Module Definitions</label>
+                            <ul data-bind="foreach: project().template.moduleDefinitions">
+                                <li>a module def</li>
+                            </ul> 
+
+                            <label>Content Definitions</label>
+                            <ul data-bind="foreach: project().template.contentDefinitions">
+                                <li>a content def</li>
+                            </ul>  
+
+                            <label>Shared Content</label>
+                            <ul data-bind="foreach: project().template.sharedContent">
+                                <li>a shared content item/list</li>
+                            </ul>  
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4 properties">
+                        properties column
+                    </div>
+                    <div class="col-sm-6 canvas">
+                        design canvas
+                    </div>
                 </div>
             </div>
-            <div id="left">
-                
-                <!-- ko if: initialized -->
-                    <h2>Pages</h2>
-                    <ul data-bind="foreach: project().template.pages">
-                        <li>a page</li>
-                    </ul>
-                <!-- /ko --> 
 
-            </div>
-
-            <div id="right">
-                
-            </div>
+        
+            <!-- /ko -->
 
         </script>
 
