@@ -160,7 +160,7 @@
                                 <input-text params="field: properties.fields.type"></input-text>
                                 <input-text params="field: properties.fields.path"></input-text>
                                 <input-pagetemplate params="field: properties.fields.pageTemplate"></input-pagetemplate>
-                                <!--<input-text params="field: properties.fields.image"></input-text>-->
+                                <input-image params="field: properties.fields.image"></input-image>
                                 
 
                                 <button data-bind="click: actions.close">ok</button>
@@ -171,7 +171,9 @@
             </div>
 
             <div class="designer" data-bind="pastable: null">
-                
+                <!-- ko if: properties.fields.image.base64().length > 0 -->
+                    <img data-bind="attr: { src: 'data:image/png;base64,' + properties.fields.image.base64() }" />
+                <!-- /ko -->
             </div>
 
         </script>
@@ -216,6 +218,16 @@
         </script>
         <!-- END INPUT PAGETEMPLATE -->
 
+        <!-- INPUT IMG -->
+        <script id="input-image-template" type="text/html">
+            <div class="form-group">
+                <label data-bind="text: label"></label>
+                <input type="file" data-bind="uploadToBase64: base64">
+            </div>
+        </script>
+        <!-- INPUT IMG -->
+        <!-- END INPUT PAGETEMPLATE -->
+
         <script type="text/javascript" src="js/lib/knockout.js"></script>
         <script type="text/javascript" src="js/lib/knockout.mapping-latest.js"></script>
         <script type="text/javascript" src="js/lib/jquery.min.js"></script>
@@ -228,9 +240,11 @@
         <script type="text/javascript" src="js/components/input-text.js"></script>
         <script type="text/javascript" src="js/components/input-moduleZones.js"></script>
         <script type="text/javascript" src="js/components/input-pageTemplate.js"></script>
+        <script type="text/javascript" src="js/components/input-image.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/viewmodels/panel-viewmodels.js"></script>
         <script type="text/javascript" src="js/viewmodels/input-viewmodels.js"></script>
         <script type="text/javascript" src="js/bindings/pastable-binding.js"></script>
+        <script type="text/javascript" src="js/bindings/uploadToBase64-binding.js"></script>
     </body>
 </html>

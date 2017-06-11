@@ -61,9 +61,11 @@ app.viewmodels.input = new function() {
         this.label = label;
         this.value = valueAry;
     };
-    self.image = function(value, label) {
+    self.image = function(url, base64, label) {
         this.id = app.utils.makeid();
         this.label = label;
+        this.url = url;
+        this.base64 = base64;
     }
 
 }

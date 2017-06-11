@@ -3,7 +3,7 @@ ko.components.register('stack-page', {
         
         
         var self = this;
-        
+        debugger;
 
         self.properties = {
             title: params.name,
@@ -14,7 +14,7 @@ ko.components.register('stack-page', {
                 f.path = new app.viewmodels.input.text(params.path, "Path");
                 f.pageTemplate = new app.viewmodels.input.pageTemplate(app.project().template.pageTemplates, params.pageTemplate, "Page Template");
                 f.modules = new app.viewmodels.input.pageModules(params.moduleZones, "Modules");
-                //f.image = new app.viewmodels.input.image(params.image, "Image");
+                f.image = new app.viewmodels.input.image(params.image.url, params.image.base64, "Image");
             }
 
             

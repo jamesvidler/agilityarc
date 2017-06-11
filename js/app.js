@@ -56,7 +56,7 @@ var app = new function() {
                 this.path = ko.observable("");
                 this.pageTemplate = ko.observable("");
                 this.moduleZones = ko.observable({});
-                this.image = ko.observable({})
+                this.image = new a.image();
             }
 
             a.pageModuleZone = function() {
@@ -66,7 +66,9 @@ var app = new function() {
             }
 
             a.image = function() {
+                this.id = self.utils.makeid();
                 this.url = ko.observable("");
+                this.base64 = ko.observable("");
             }
 
             a.contentDefinitions = function() {
