@@ -1,24 +1,33 @@
 @import "lib/bootstrap/theme.less";
 
-.container {
-    width: 100%!important;
-}
 
-.sidebar, .properties, canvas {
+.menu, .properties, .designer, .empty {
     position: absolute;
     top: 0;
-    bottom: 0;       
+    bottom: 0;
+
+    overflow: auto;       
 }
 
-.sidebar {
+.menu {
     background: #f1f1f1;
+    width: 20%;
+
 }
 
 .properties {
-    left: 16.66666667%;
+    left: 20%;
     background: #cccccc;
+    width: 30%;
 }
 
-.canvas {
+.designer {
     left: 50%;
+    width: 50%;
+}
+
+
+
+.container {
+    width: 100%!important;
 }
