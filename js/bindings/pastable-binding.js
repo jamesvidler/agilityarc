@@ -38,7 +38,7 @@ ko.bindingHandlers.pastable = {
                 alert("Error! Upload failed. Can not connect to server.");
             };
 
-            xhr.open("POST", 'https://requestb.in/10erh5y1');
+            xhr.open("POST", 'https://agility-arc-functions.azurewebsites.net/api/UploadImage?code=n3erYDOSKDTrRTtgrfbejAXJBUaQAQXMpdv6qSnyxBGqqqCats9KKw==');
             xhr.setRequestHeader("Content-Type", file.type);
             var formData = new FormData();
             formData.append("pastedFile", file);
