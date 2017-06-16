@@ -6,7 +6,7 @@ ko.bindingHandlers.pastable = {
         element.addEventListener("paste", handlePaste);
 
         function handlePaste(e) {
-            debugger;
+            
             for (var i = 0 ; i < e.clipboardData.items.length ; i++) {
                 var item = e.clipboardData.items[i];
                 console.log("Item: " + item.type);
@@ -18,8 +18,22 @@ ko.bindingHandlers.pastable = {
             }
         }
 
+        function makeid()
+        {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for( var i=0; i < 5; i++ )
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            return text;
+        }
+
         function uploadFile(file) {
             var xhr = new XMLHttpRequest();
+
+            //set unique name
+            file.name = makeid() + ".png";
 
             xhr.upload.onprogress = function(e) {
                 var percentComplete = (e.loaded / e.total) * 100;
@@ -29,6 +43,7 @@ ko.bindingHandlers.pastable = {
             xhr.onload = function() {
                 if (xhr.status == 200) {
                     alert("Sucess! Upload completed");
+                    debugger;
                 } else {
                     alert("Error! Upload failed");
                 }
@@ -39,7 +54,7 @@ ko.bindingHandlers.pastable = {
             };
 
             xhr.open("POST", 'https://agility-arc-functions.azurewebsites.net/api/UploadImage?code=n3erYDOSKDTrRTtgrfbejAXJBUaQAQXMpdv6qSnyxBGqqqCats9KKw==');
-            xhr.setRequestHeader("Content-Type", file.type);
+            
             var formData = new FormData();
             formData.append("pastedFile", file);
             xhr.send(formData);
