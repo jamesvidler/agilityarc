@@ -3,6 +3,8 @@ ko.bindingHandlers.pastable = {
         // This will be called when the binding is first applied to an element
         // Set up any initial state, event handlers, etc. here
 
+        var value = valueAccessor();
+
         element.addEventListener("paste", handlePaste);
 
         function handlePaste(e) {
@@ -32,9 +34,6 @@ ko.bindingHandlers.pastable = {
         function uploadFile(file) {
             var xhr = new XMLHttpRequest();
 
-            //set unique name
-            file.name = makeid() + ".png";
-
             xhr.upload.onprogress = function(e) {
                 var percentComplete = (e.loaded / e.total) * 100;
                 console.log("Uploaded" + percentComplete + "%");
@@ -42,8 +41,8 @@ ko.bindingHandlers.pastable = {
 
             xhr.onload = function() {
                 if (xhr.status == 200) {
-                    alert("Sucess! Upload completed");
-                    debugger;
+                    var responseJSON = JSON.parse(xhr.responseText);
+                    value(responseJSON.urls[0]);
                 } else {
                     alert("Error! Upload failed");
                 }

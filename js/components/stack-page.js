@@ -3,7 +3,7 @@ ko.components.register('stack-page', {
         
         
         var self = this;
-        debugger;
+        
 
         self.properties = {
             title: params.name,
