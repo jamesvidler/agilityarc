@@ -1,32 +1,33 @@
 <!-- STACK - PAGE TEMPLATE -->
         <script id="stack-pageTemplate-template" type="text/html">
-            <div class="properties">
-                <h2 data-bind="text: properties.title"></h2>
+            <div class="stack-item main" data-bind="style: { 'z-index': state.order }">
+                <div class="properties">
+                    <h2 data-bind="text: properties.title"></h2>
 
-                <span data-bind="text: properties.fields.id"></span>
+                    <span data-bind="text: properties.fields.id"></span>
 
-                <div class="container">
-                    <form data-bind="submit: actions.close">
-                        <div class="row">
-                            <div class="col-xs-12">
+                    <div class="container">
+                        <form data-bind="submit: actions.close">
+                            <div class="row">
+                                <div class="col-xs-12">
 
 
-                                <input-text params="field: properties.fields.name"></input-text>
-                                <input-text params="field: properties.fields.description"></input-text>
-                                <input-text params="field: properties.fields.relativeUrl"></input-text>
-                                <input-modulezones params="field: properties.fields.moduleZones"></input-modulezones>
-                                
+                                    <input-text params="field: properties.fields.name"></input-text>
+                                    <input-text params="field: properties.fields.description"></input-text>
+                                    <input-text params="field: properties.fields.relativeUrl"></input-text>
+                                    <input-modulezones params="field: properties.fields.moduleZones"></input-modulezones>
+                                    
 
-                                <button data-bind="click: actions.close">ok</button>
+                                    <button data-bind="click: actions.close">ok</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="designer">
+                    <div style="background-color: black; height: 3000px;"></div>
                 </div>
             </div>
-
-            <div class="designer">
-                <div style="background-color: black; height: 3000px;"></div>
-            </div>
-
         </script>
         <!-- END STACK - PAGE TEMPLATE -->

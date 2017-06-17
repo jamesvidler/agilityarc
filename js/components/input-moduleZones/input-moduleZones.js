@@ -3,7 +3,10 @@ ko.components.register('input-modulezones', {
         return params.field;
 
     },
-    template: { element: 'input-modulezones-template'}
+    template: { 
+        element: 'input-modulezones-template',
+        templateUrl: 'js/components/input-moduleZones/input-moduleZones.html'
+    }
 });
 
 

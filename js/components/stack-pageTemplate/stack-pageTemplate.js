@@ -4,17 +4,20 @@ ko.components.register('stack-pageTemplate', {
         
         var self = this;
         
-        
+        self.state = {
+            active: params.active,
+            order: params.order
+        }
 
         self.properties = {
             title: params.name,
             fields: new function() {
                 var f = this;
                 f.id = params.id;
-                f.name = new app.viewmodels.input.text(params.name, "Name");
-                f.description = new app.viewmodels.input.text(params.description, "Description");
-                f.relativeUrl = new app.viewmodels.input.text(params.relativeUrl, "Relative Url");
-                f.moduleZones = new app.viewmodels.input.moduleZones(params.moduleZones, "Module Zones");
+                f.name = new app.viewmodels.input.text(params.data.name, "Name");
+                f.description = new app.viewmodels.input.text(params.data.description, "Description");
+                f.relativeUrl = new app.viewmodels.input.text(params.data.relativeUrl, "Relative Url");
+                f.moduleZones = new app.viewmodels.input.moduleZones(params.data.moduleZones, "Module Zones");
             }
         }
 

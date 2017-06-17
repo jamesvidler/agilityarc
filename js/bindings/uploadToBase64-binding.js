@@ -4,7 +4,7 @@ ko.bindingHandlers.uploadToBase64 = {
         // Set up any initial state, event handlers, etc. here
 
         var value = valueAccessor();
-        debugger;
+    
         
 
         var handleFileSelect = function(evt) {

@@ -56,7 +56,7 @@ ko.bindingHandlers.pastable = {
         if(source() != null && active()) {
             ko.bindingHandlers.pastable.setImg(canvas, ctx, source(), function() {
                 source(null);
-                debugger;
+                
                 canvas.toBlob(function(blob) {
                     file = new File([blob], "image-filename-tbd.png");
                     uploadFile(file);
