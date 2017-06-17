@@ -32,5 +32,8 @@ ko.components.register('stack-pageTemplate', {
         return self;
 
     },
-    template: { element: 'stack-pageTemplate-template'}
+    template: { 
+        element: 'stack-pageTemplate-template',
+        templateUrl: 'js/components/stack-pageTemplate/stack-pageTemplate.html'
+    }
 });

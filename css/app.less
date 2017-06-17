@@ -1,5 +1,10 @@
 @import "lib/bootstrap/theme.less";
 
+canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
 
 .menu, .properties, .designer, .empty {
     position: absolute;
@@ -16,19 +21,25 @@
 }
 
 .properties {
-    left: 20%;
     background: #cccccc;
     width: 30%;
 }
 
 .designer {
-    left: 50%;
-    width: 50%;
-    background: : #fff;
+    left: 30%;
+    width: 70%;
+    background: #fff;
 }
 
-
+.stack-item {
+    width: 80%;
+    left: 20%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
 
 .container {
     width: 100%!important;
 }
+

@@ -3,6 +3,7 @@
 app.viewmodels.input = new function() {
     var self = this;
     self.text = function(value, label) {
+        
         this.id = app.utils.makeid();
         this.value = value;
         this.label = label;

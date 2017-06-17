@@ -1,0 +1,17 @@
+<!-- INPUT MODULE ZONES -->
+        <script id="input-modulezones-template" type="text/html">
+            <div class="form-group">
+                <label>Module Zones</label>
+                <button data-bind="click: click.newModuleZone">New</button>
+                <!-- ko foreach: fields -->
+                <input-modulezone params="field: $data"></input-modulezone>
+                <!-- /ko -->
+            </div>
+        </script>
+        <script id="input-modulezone-template" type="text/html">
+            <input-text params="field: fields.name"></input-text>
+            <input-text params="field: fields.referenceName"></input-text>
+            <input-text params="field: fields.description"></input-text>
+            <button data-bind="click: $parents[1].click.deleteModuleZone">Delete</button>
+        </script>
+        <!-- END MODULE ZONES -->

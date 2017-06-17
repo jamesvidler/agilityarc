@@ -11,5 +11,8 @@ ko.components.register('input-modulezone', {
     viewModel: function(params) {
         return params.field;
     },
-    template: { element: 'input-modulezone-template'}
+    template: { 
+        element: 'input-modulezone-template',
+        templateUrl: 'js/components/input-moduleZones/input-moduleZones.html'
+    }
 });

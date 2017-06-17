@@ -6,241 +6,41 @@
     </head>
     <body>
 
-        <agility-arc params="vm: app"></agility-arc>
+        <master params="vm: app"></master>
 
-        <script id="agility-arc-template" type="text/html">
-
-            <!-- ko if: initialized -->
-
-                        
-                <!-- MENU TEMPLATE -->
-                <div class="menu">
-                    
-                    <div>
-                        <a href="javascript:;" title="Edit Project" data-bind="text: project().template.name, click: menu.click.project"></a>
-                    </div>
-
-                    <div>
-                        <label>Page Templates</label>
-                        <button title="New Page" data-bind="click: menu.click.newPageTemplate">New</button>
-                    </div>
-
-                    <ul data-bind="foreach: project().template.pageTemplates">
-                        <li>
-                            <a href="javascript:;" data-bind="text: name, click: $parent.menu.click.openPageTemplate" title="View Page Template"></a>
-                            <button data-bind="click: $parent.menu.click.deletePageTemplate">delete</button>
-                        </li>
-                    </ul>
-                    
-
-                    <div>
-                        <label>Pages</label>
-                        <button title="New Page" data-bind="click: menu.click.newPage">New</button>
-                    </div>
-
-                    <ul data-bind="foreach: project().template.pages">
-                        <li>
-                            <a href="javascript:;" data-bind="text: name, click: $parent.menu.click.openPage" title="View Page"></a>
-                            <button data-bind="click: $parent.menu.click.deletePage">delete</button>
-                        </li>
-                    </ul>
-
-                    
-                    
-                    <label>Module Definitions</label>
-                    <ul data-bind="foreach: project().template.moduleDefinitions">
-                        <li>a module def</li>
-                    </ul> 
-
-                    <label>Content Definitions</label>
-                    <ul data-bind="foreach: project().template.contentDefinitions">
-                        <li>a content def</li>
-                    </ul>  
-
-                    <label>Shared Content</label>
-                    <ul data-bind="foreach: project().template.sharedContent">
-                        <li>a shared content item/list</li>
-                    </ul> 
-
-                </div>
-                <div class="main">
-
-
-                    <!-- ko foreach: stack.items -->
-                    <!-- ko component: $data -->
-                    
-                    <!-- /ko -->
-
-                    <!-- /ko -->
-
-
-                </div>
-                
-                <!-- END MENU TEMPLATE -->
         
-            <!-- /ko -->
 
-        </script>
+        
 
-        <!-- STACK - PROJECT -->
-        <script id="stack-project-template" type="text/html">
-            <div class="properties">
-                <h2 data-bind="text: properties.title"></h2>
-
-                <div class="container">
-                    <form>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <input-text params="field: properties.fields.name"></input-text>
-                                </div>
-                                <button data-bind="click: actions.close">ok</button>
-                            </div>
-                        </div>
-                    </form>
-                    
-                </div>
-            </div>
-
-            <div class="designer">
-                <div style="background-color: black; height: 3000px;"></div>
-            </div>
-
-        </script>
-        <!-- END STACK - PROJECT -->
-
-        <!-- STACK - PAGE TEMPLATE -->
-        <script id="stack-pageTemplate-template" type="text/html">
-            <div class="properties">
-                <h2 data-bind="text: properties.title"></h2>
-
-                <span data-bind="text: properties.fields.id"></span>
-
-                <div class="container">
-                    <form data-bind="submit: actions.close">
-                        <div class="row">
-                            <div class="col-xs-12">
+        
 
 
-                                <input-text params="field: properties.fields.name"></input-text>
-                                <input-text params="field: properties.fields.description"></input-text>
-                                <input-text params="field: properties.fields.relativeUrl"></input-text>
-                                <input-modulezones params="field: properties.fields.moduleZones"></input-modulezones>
-                                
-
-                                <button data-bind="click: actions.close">ok</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="designer">
-                <div style="background-color: black; height: 3000px;"></div>
-            </div>
-
-        </script>
-        <!-- END STACK - PROJECT -->
+        
 
 
-        <!-- STACK - PAGE -->
-        <script id="stack-page-template" type="text/html">
-            <div class="properties">
-                <h2 data-bind="text: properties.title"></h2>
+        
 
-                <span data-bind="text: properties.fields.id"></span>
-
-                <div class="container">
-                    <form data-bind="submit: actions.close">
-                        <div class="row">
-                            <div class="col-xs-12">
+        
 
 
-                                <input-text params="field: properties.fields.name"></input-text>
-                                <input-text params="field: properties.fields.type"></input-text>
-                                <input-text params="field: properties.fields.path"></input-text>
-                                <input-pagetemplate params="field: properties.fields.pageTemplate"></input-pagetemplate>
-                                <input-image params="field: properties.fields.image"></input-image>
-                                
+        
 
-                                <button data-bind="click: actions.close">ok</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="designer" data-bind="pastable: properties.fields.image.url">
-                <!-- ko if: properties.fields.image.url().length > 0 -->
-                    <img data-bind="attr: { src: properties.fields.image.url }" />
-                <!-- /ko -->
-            </div>
-
-        </script>
-        <!-- END STACK - PAGE -->
-
-
-        <!-- INPUT TEXT -->
-        <script id="input-text-template" type="text/html">
-            <div class="form-group">
-                <label data-bind="text: label, attr: { for: id }"></label>
-                <input type="text" class="form-control" data-bind="name: id, value: value" />
-            </div>
-        </script>
-        <!-- END INPUT TEXT -->
-
-        <!-- INPUT MODULE ZONES -->
-        <script id="input-modulezones-template" type="text/html">
-            <div class="form-group">
-                <label>Module Zones</label>
-                <button data-bind="click: click.newModuleZone">New</button>
-                <!-- ko foreach: fields -->
-                <input-modulezone params="field: $data"></input-modulezone>
-                <!-- /ko -->
-            </div>
-        </script>
-        <script id="input-modulezone-template" type="text/html">
-            <input-text params="field: fields.name"></input-text>
-            <input-text params="field: fields.referenceName"></input-text>
-            <input-text params="field: fields.description"></input-text>
-            <button data-bind="click: $parents[1].click.deleteModuleZone">Delete</button>
-        </script>
-        <!-- END MODULE ZONES -->
-
-
-        <!-- INPUT PAGETEMPLATE -->
-        <script id="input-pagetemplate-template" type="text/html">
-            <div class="form-group">
-                <label>Page Templates</form>
-                <select class="form-control" data-bind="options: options, optionsValue: 'id', optionsText: 'name', value: value"></select>
-                <button data-bind="click: newPageTemplate">New Page Template</button>
-            </div>
-        </script>
-        <!-- END INPUT PAGETEMPLATE -->
-
-        <!-- INPUT IMG -->
-        <script id="input-image-template" type="text/html">
-            <div class="form-group">
-                <label data-bind="text: label"></label>
-                <input type="file" data-bind="uploadFile: null">
-            </div>
-        </script>
-        <!-- INPUT IMG -->
-        <!-- END INPUT PAGETEMPLATE -->
+        
+        
 
         <script type="text/javascript" src="js/lib/knockout.js"></script>
         <script type="text/javascript" src="js/lib/knockout.mapping-latest.js"></script>
         <script type="text/javascript" src="js/lib/jquery.min.js"></script>
         <script type="text/javascript" src="js/lib/sammy.js"></script>
         <script type="text/javascript" src="js/lib/jquery.jcrop.js"></script>
-        <script type="text/javascript" src="js/components/main.js"></script>
-        <script type="text/javascript" src="js/components/stack-project.js"></script>
-        <script type="text/javascript" src="js/components/stack-pageTemplate.js"></script>
-        <script type="text/javascript" src="js/components/stack-page.js"></script>
-        <script type="text/javascript" src="js/components/input-text.js"></script>
-        <script type="text/javascript" src="js/components/input-moduleZones.js"></script>
-        <script type="text/javascript" src="js/components/input-pageTemplate.js"></script>
-        <script type="text/javascript" src="js/components/input-image.js"></script>
+        <script type="text/javascript" src="js/components/master/master.js"></script>
+        <script type="text/javascript" src="js/components/stack-project/stack-project.js"></script>
+        <script type="text/javascript" src="js/components/stack-pageTemplate/stack-pageTemplate.js"></script>
+        <script type="text/javascript" src="js/components/stack-Page/stack-page.js"></script>
+        <script type="text/javascript" src="js/components/input-text/input-text.js"></script>
+        <script type="text/javascript" src="js/components/input-moduleZones/input-moduleZones.js"></script>
+        <script type="text/javascript" src="js/components/input-pageTemplate/input-pageTemplate.js"></script>
+        <script type="text/javascript" src="js/components/input-image/input-image.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/viewmodels/panel-viewmodels.js"></script>
         <script type="text/javascript" src="js/viewmodels/input-viewmodels.js"></script>

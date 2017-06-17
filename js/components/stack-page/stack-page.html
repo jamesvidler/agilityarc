@@ -1,0 +1,37 @@
+<!-- STACK - PAGE -->
+        <script id="stack-page-template" type="text/html">
+            <div class="stack-item main" data-bind="style: { 'z-index': state.order }">
+                <div class="properties">
+                    <h2 data-bind="text: properties.title"></h2>
+
+                    <span data-bind="text: properties.fields.id"></span>
+
+                    <div class="container">
+                        <form data-bind="submit: actions.close">
+                            <div class="row">
+                                <div class="col-xs-12">
+
+
+                                    <input-text params="field: properties.fields.name"></input-text>
+                                    <input-text params="field: properties.fields.type"></input-text>
+                                    <input-text params="field: properties.fields.path"></input-text>
+                                    <input-pagetemplate params="field: properties.fields.pageTemplate"></input-pagetemplate>
+                                    <input-image params="field: properties.fields.image"></input-image>
+                                    
+
+                                    <button data-bind="click: actions.close">ok</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="designer">
+                    <canvas data-bind="pastable: { value: properties.fields.image.url, active: state.active, source: app.paste.pasteURL }"></canvas>
+                    <!-- ko if: properties.fields.image.url().length > 0 -->
+                        <!--<img data-bind="attr: { src: properties.fields.image.url }" />-->
+                    <!-- /ko -->
+                </div>
+            </div>
+        </script>
+        <!-- END STACK - PAGE -->

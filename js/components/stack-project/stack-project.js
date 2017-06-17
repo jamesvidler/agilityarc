@@ -30,5 +30,8 @@ ko.components.register('stack-project', {
         return self;
 
     },
-    template: { element: 'stack-project-template'}
+    template: { 
+        element: 'stack-project-template',
+        templateUrl: 'js/components/stack-project/stack-project.html'
+    }
 });

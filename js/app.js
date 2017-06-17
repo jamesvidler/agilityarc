@@ -170,17 +170,40 @@ var app = new function() {
     self.stack = new function() {
         var s = this;
         s.items = ko.observableArray([]);
-        s.add = function(componentName, params) {
+        s.add = function(componentName, data) {
             //ensure we don't have duplicate stacks
             var items = ko.unwrap(s.items);
-            for(var i in items) {
+              
+            var existFlag = false;
+            for(var i = 0; i < items.length; i++) {
+                items[i].params.active(false);
                 //check duplicates by name and component
-                if(componentName === items[i].name && items[i].params.id === params.id) {
-                    //we have a duplicate - move this one to the forfront of the stack
-                    s.items.splice(i, 1);
+                if(componentName === items[i].name && items[i].params.data.id === data.id && !existFlag) {
+                    //we have a duplicate, increase the z-index to be at the top
+                    s.items()[i].params.order(items.length);
+                    s.items()[i].params.active(true);
+                    existFlag = true;
+                    
+                } else {
+                    s.items()[i].params.order(i);
+                    s.items()[i].params.active(false);
                 }
+
             }
-            s.items.push({ name: componentName, params: params });
+            
+            if(!existFlag) {
+                s.items.push({ 
+                    name: componentName,
+                    params: { 
+                        data: data,
+                        order: ko.observable(items.length),
+                        active: ko.observable(true) 
+                    }
+                });
+            }
+
+            
+
         };
         s.remove = function(componentName, params) {
             var items = ko.unwrap(s.items);
@@ -246,12 +269,15 @@ var app = new function() {
 
     self.pageComponent = ko.observable(null);
 
-    //on load
-    self.getSetProject();
+    
 
     
-    self.utils = {
-        makeid: function() {
+    self.utils = new function() {
+        var u = this;
+        u.state = new function() {
+            this.xhrTemplateRequestPool = [];
+        },
+        u.makeid = function() {
             var text = "";
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             for( var i=0; i < 5; i++ )
@@ -259,8 +285,126 @@ var app = new function() {
 
             return text;
         }
+        u.loadDependantTemplates = function (url, successCallback, errorCallback) {
+
+            var req = u.state.xhrTemplateRequestPool[url];
+            if (req) {
+                req.success(function (result) {
+                    successCallback();
+                });
+                return;
+            }
+
+
+            var xhr = $.get(url, null, null, "html")
+                .success(function (result) {
+                    $('body').append(result);
+                    successCallback();
+                })
+                .fail(function (err, status, errorMessage) {
+
+                    if (status == "abort") {
+                        //do nothing...
+                        return;
+                    }
+
+                    if (errorCallback != undefined && $.isFunction(errorCallback)) {
+                        errorCallback(errorMessage, status);
+                    } else {
+                        console.error("An error occurred while requesting the template: " + url)
+                    }
+                }).always(function () {
+                    u.state.xhrTemplateRequestPool[url] = null;
+                });
+
+            u.state.xhrTemplateRequestPool[url] = xhr;
+            return xhr;
+
+        }
+        u.registerComponentLoader = function () {
+            //CUSTOM COMPONENT LOADER 
+            var templateFromUrlLoader = {
+                loadTemplate: function (name, templateConfig, callback) {
+                    //if we have the template already...
+                    if ($('#' + templateConfig.element).length > 0) {
+                        callback(null);
+                        return;
+                    }
+
+                    if (templateConfig.templateUrl) {
+
+                        var loadTemplate = function (url) {
+                            u.loadDependantTemplates(url, function () {
+                                callback(null);
+                            }, function () {
+                                callback(null);
+                            });
+                        };
+
+                        var url = ko.unwrap(templateConfig.templateUrl);
+                        if (url && url != "") {
+                            //if we have a url, load it...
+                            loadTemplate(url);
+                        } else {
+                            //if we don't have a url, see if we can wait for it to be set...
+                            if (ko.isSubscribable(templateConfig.templateUrl)) {
+                                templateConfig.templateUrl.subscribe(function (value) {
+                                    if (value && value != "") loadTemplate(value);
+                                });
+
+                            } else {
+                                callback(null);
+                            }
+                        }
+
+                    } else {
+                        // Unrecognized config format. Let another loader handle it.
+                        callback(null);
+                    }
+                }
+            };
+
+            // Register it
+            ko.components.loaders.unshift(templateFromUrlLoader);
+        };
+    };
+
+    self.paste = new function() {
+        var p = this;
+        p.init = function() {
+            document.addEventListener("paste",  this.paste);
+        }
+        p.paste = function(e) {
+            if (e.clipboardData) {
+                    
+                var items = e.clipboardData.items;
+                if (!items) return;
+                
+                //access data directly
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf("image") !== -1) {
+                        //image
+                        var blob = items[i].getAsFile();
+                        var URLObj = window.URL || window.webkitURL;
+                        var source = URLObj.createObjectURL(blob);
+                        p.pasteURL(source);
+                    }
+                }
+                e.preventDefault();
+            }
+        }
+        p.pasteURL = ko.observable(null);
+    }
+
+
+    self.onLoad = function() {
+        //on load        
+        self.utils.registerComponentLoader();
+        self.getSetProject();
+        self.paste.init();
     }
     
+    self.onLoad();
 
 }
 

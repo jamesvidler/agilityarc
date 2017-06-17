@@ -1,0 +1,26 @@
+<!-- STACK - PROJECT -->
+        <script id="stack-project-template" type="text/html">
+            <div class="properties">
+                <h2 data-bind="text: properties.title"></h2>
+
+                <div class="container">
+                    <form>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <input-text params="field: properties.fields.name"></input-text>
+                                </div>
+                                <button data-bind="click: actions.close">ok</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+
+            <div class="designer">
+                <div style="background-color: black; height: 3000px;"></div>
+            </div>
+
+        </script>
+        <!-- END STACK - PROJECT -->

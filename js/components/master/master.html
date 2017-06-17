@@ -1,0 +1,70 @@
+<script id="agility-arc-template" type="text/html">
+
+            <!-- ko if: initialized -->
+
+                        
+                <!-- MENU TEMPLATE -->
+                <div class="menu">
+                    
+                    <div>
+                        <a href="javascript:;" title="Edit Project" data-bind="text: project().template.name, click: menu.click.project"></a>
+                    </div>
+
+                    <div>
+                        <label>Page Templates</label>
+                        <button title="New Page" data-bind="click: menu.click.newPageTemplate">New</button>
+                    </div>
+
+                    <ul data-bind="foreach: project().template.pageTemplates">
+                        <li>
+                            <a href="javascript:;" data-bind="text: name, click: $parent.menu.click.openPageTemplate" title="View Page Template"></a>
+                            <button data-bind="click: $parent.menu.click.deletePageTemplate">delete</button>
+                        </li>
+                    </ul>
+                    
+
+                    <div>
+                        <label>Pages</label>
+                        <button title="New Page" data-bind="click: menu.click.newPage">New</button>
+                    </div>
+
+                    <ul data-bind="foreach: project().template.pages">
+                        <li>
+                            <a href="javascript:;" data-bind="text: name, click: $parent.menu.click.openPage" title="View Page"></a>
+                            <button data-bind="click: $parent.menu.click.deletePage">delete</button>
+                        </li>
+                    </ul>
+
+                    
+                    
+                    <label>Module Definitions</label>
+                    <ul data-bind="foreach: project().template.moduleDefinitions">
+                        <li>a module def</li>
+                    </ul> 
+
+                    <label>Content Definitions</label>
+                    <ul data-bind="foreach: project().template.contentDefinitions">
+                        <li>a content def</li>
+                    </ul>  
+
+                    <label>Shared Content</label>
+                    <ul data-bind="foreach: project().template.sharedContent">
+                        <li>a shared content item/list</li>
+                    </ul> 
+
+                </div>
+                
+
+
+                    <!-- ko foreach: stack.items -->
+                    <!-- ko component: $data --><!-- /ko -->
+                    <!-- /ko -->
+
+
+                </div>
+                
+                <!-- END MENU TEMPLATE -->
+        
+            <!-- /ko -->
+
+        </script>

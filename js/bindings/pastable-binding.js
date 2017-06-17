@@ -1,34 +1,86 @@
 ko.bindingHandlers.pastable = {
+    setImg: function(canvas, ctx, value) {
+        var img = new Image();
+        img.onload = function() {
+
+        }
+        img.src = value();
+    },
     init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+        
+
+    },
+    update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+        // This will be called once when the binding is first applied to an element,
+        // and again whenever any observables/computeds that are accessed change
+        // Update the DOM element based on the supplied values here.
+
         // This will be called when the binding is first applied to an element
         // Set up any initial state, event handlers, etc. here
+        var value = valueAccessor().value;
+        var active = valueAccessor().active;
+        var source = valueAccessor().source;
+        
+        var canvas = element;
+	    var ctx = element.getContext("2d");
 
-        var value = valueAccessor();
+         //set the value of the current image in the canvas
 
-        element.addEventListener("paste", handlePaste);
-
-        function handlePaste(e) {
             
-            for (var i = 0 ; i < e.clipboardData.items.length ; i++) {
-                var item = e.clipboardData.items[i];
-                console.log("Item: " + item.type);
-                if (item.type.indexOf("image") > -1) {
-                    uploadFile(item.getAsFile());
+           
+        // function handlePaste(e) {
+            
+        //     for (var i = 0 ; i < e.clipboardData.items.length ; i++) {
+        //         var item = e.clipboardData.items[i];
+        //         console.log("Item: " + item.type);
+        //         if (item.type.indexOf("image") > -1) {
+        //             uploadFile(item.getAsFile());
+        //         } else {
+        //             console.log("Discardingimage paste data");
+        //         }
+        //     }
+        // }
+
+        //draw pasted image to canvas
+        var paste_createImage = function (source) {
+            console.log('image pasting...');
+            var pastedImage = new Image();
+            pastedImage.onload = function () {
+               
+                
+                var maxWidth = 745;
+                var width = pastedImage.width;
+                var height = pastedImage.height;
+                var ratio = width / height;
+                if(pastedImage.width > maxWidth) {
+                    width = maxWidth;
+                    height = width / ratio;
+
+                    //resize the canvas
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    ctx.drawImage(pastedImage, 0 , 0, width, height);
                 } else {
-                    console.log("Discardingimage paste data");
+                    //resize the canvas
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(pastedImage, 0 , 0);
                 }
-            }
+                
+                source(null);
+
+                canvas.toBlob(function(blob) {
+                    file = new File([blob], "image-filename-tbd.png");
+                    uploadFile(file);
+                });
+                 
+            };
+            pastedImage.src = source();
         }
-
-        function makeid()
-        {
-            var text = "";
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-            for( var i=0; i < 5; i++ )
-                text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-            return text;
+        
+        if(source() != null && active()) {
+            paste_createImage(source);
         }
 
         function uploadFile(file) {
@@ -58,11 +110,7 @@ ko.bindingHandlers.pastable = {
             formData.append("pastedFile", file);
             xhr.send(formData);
         }
-
-    },
-    update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        // This will be called once when the binding is first applied to an element,
-        // and again whenever any observables/computeds that are accessed change
-        // Update the DOM element based on the supplied values here.
+        
+        
     }
 };
