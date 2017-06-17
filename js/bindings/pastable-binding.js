@@ -1,22 +1,49 @@
 ko.bindingHandlers.pastable = {
-    setImg: function(canvas, ctx, value) {
+    setImg: function(canvas, ctx, value, callback) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
         var img = new Image();
+       img.setAttribute('crossOrigin', 'anonymous');
         img.onload = function() {
+            var maxWidth = 745;
+            var width = img.width;
+            var height = img.height;
+            var ratio = width / height;
+            if(img.width > maxWidth) {
+                width = maxWidth;
+                height = width / ratio;
 
+                //resize the canvas
+                canvas.width = width;
+                canvas.height = height;
+
+                ctx.drawImage(img, 0 , 0, width, height);
+            } else {
+                //resize the canvas
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0 , 0);
+            }
+
+            if(callback && $.isFunction(callback)) {
+                callback();
+            }
         }
-        img.src = value();
+        img.src = value;
+
     },
     init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        
+        var canvas = element;
+	    var ctx = element.getContext("2d");
+        var value = valueAccessor().value;
+        var active = valueAccessor().active;
+        var source = valueAccessor().source;
+
+        ko.bindingHandlers.pastable.setImg(canvas, ctx, value());
 
     },
     update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        // This will be called once when the binding is first applied to an element,
-        // and again whenever any observables/computeds that are accessed change
-        // Update the DOM element based on the supplied values here.
 
-        // This will be called when the binding is first applied to an element
-        // Set up any initial state, event handlers, etc. here
         var value = valueAccessor().value;
         var active = valueAccessor().active;
         var source = valueAccessor().source;
@@ -24,63 +51,17 @@ ko.bindingHandlers.pastable = {
         var canvas = element;
 	    var ctx = element.getContext("2d");
 
-         //set the value of the current image in the canvas
-
-            
-           
-        // function handlePaste(e) {
-            
-        //     for (var i = 0 ; i < e.clipboardData.items.length ; i++) {
-        //         var item = e.clipboardData.items[i];
-        //         console.log("Item: " + item.type);
-        //         if (item.type.indexOf("image") > -1) {
-        //             uploadFile(item.getAsFile());
-        //         } else {
-        //             console.log("Discardingimage paste data");
-        //         }
-        //     }
-        // }
-
-        //draw pasted image to canvas
-        var paste_createImage = function (source) {
-            console.log('image pasting...');
-            var pastedImage = new Image();
-            pastedImage.onload = function () {
-               
-                
-                var maxWidth = 745;
-                var width = pastedImage.width;
-                var height = pastedImage.height;
-                var ratio = width / height;
-                if(pastedImage.width > maxWidth) {
-                    width = maxWidth;
-                    height = width / ratio;
-
-                    //resize the canvas
-                    canvas.width = width;
-                    canvas.height = height;
-
-                    ctx.drawImage(pastedImage, 0 , 0, width, height);
-                } else {
-                    //resize the canvas
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.drawImage(pastedImage, 0 , 0);
-                }
-                
+    
+        //draw the image on canvas
+        if(source() != null && active()) {
+            ko.bindingHandlers.pastable.setImg(canvas, ctx, source(), function() {
                 source(null);
-
+                debugger;
                 canvas.toBlob(function(blob) {
                     file = new File([blob], "image-filename-tbd.png");
                     uploadFile(file);
                 });
-                 
-            };
-            pastedImage.src = source();
-        }
-        
-        if(source() != null && active()) {
-            paste_createImage(source);
+            });
         }
 
         function uploadFile(file) {
