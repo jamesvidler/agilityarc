@@ -27,10 +27,7 @@
                 </div>
 
                 <div class="designer">
-                    <canvas data-bind="pastable: { value: properties.fields.image.url, active: state.active, source: app.paste.pasteURL }"></canvas>
-                    <!-- ko if: properties.fields.image.url().length > 0 -->
-                        <!--<img data-bind="attr: { src: properties.fields.image.url }" />-->
-                    <!-- /ko -->
+                    <designer params="data: { url: properties.fields.image.url }, state: { active: state.active }"></div>
                 </div>
             </div>
         </script>

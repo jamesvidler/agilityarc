@@ -1,0 +1,6 @@
+<script id="designer-template" type="text/html">
+
+    <canvas data-bind="pastable: { value: data.url, active: state.active, source: app.paste.pasteURL, onAfterPaste: actions.uploadFile }"></canvas>
+    <img data-bind="attr: { src: data.url }" />
+    
+</script>
