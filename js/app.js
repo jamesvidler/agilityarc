@@ -51,6 +51,16 @@ var app = new function() {
                 this.y2 = ko.observable(null);
                 this.w = ko.observable(null);
                 this.h = ko.observable(null);
+                this.style = ko.computed(function() {
+                    debugger;
+                    var x1 = ko.unwrap(this.x1);
+                    var x2 = ko.unwrap(this.x2);
+                    var x3 = ko.unwrap(this.x3);
+                    var x4 = ko.unwrap(this.x4);
+                })
+                this.dispose = function() {
+                    this.style.dispose();
+                }
             }
 
             a.moduleZone = function() {

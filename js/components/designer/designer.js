@@ -52,6 +52,7 @@ ko.components.register('designer', {
             var jcrop = this;
             jcrop.instance = ko.observable(null);
             jcrop.currentSelection = ko.observable(null);
+            jcrop.active = ko.observable(false);
             jcrop.updateSelection = function(c) {
                 jcrop.currentSelection().x1(c.x);
                 jcrop.currentSelection().x2(c.x2);
@@ -60,6 +61,19 @@ ko.components.register('designer', {
                 jcrop.currentSelection().w(c.w);
                 jcrop.currentSelection().h(c.h);
             };
+            jcrop.enable = function() {
+                jcrop.active(true);
+                jcrop.instance().enable();
+            };
+            jcrop.disable = function() {
+                jcrop.active(false);
+                jcrop.instance().disable();
+            };
+            jcrop.destroy = function() {
+                self.active(false);
+                console.log('jcrop destroyed');
+                jcrop.instance().destroy();
+            }
             jcrop.onSelect = function(c) {
                 jcrop.updateSelection(c);
                 app.operations.save();
@@ -69,17 +83,17 @@ ko.components.register('designer', {
             };
             jcrop.onRelease = function(c) {
                 console.log('onRelease', c);
+                jcrop.disable();
             }
             jcrop.onInit = function(jcropInstance) {
                 console.log('init fired');
                 jcrop.instance(jcropInstance);
 
                 //disable this by default at first
-                jcrop.instance().disable();
+                jcrop.disable();
             };
             jcrop.onDispose = function() {
-                console.log('jcrop destroyed');
-                jcrop.instance().destroy();
+                jcrop.destroy();
             };
             jcrop.findSelection = function(selectionID, selectionType) {
                 var selections = self.data.selections();
@@ -106,17 +120,21 @@ ko.components.register('designer', {
 
                 jcrop.onSelectCallback = onSelectCallback;
 
-                jcrop.instance().enable();
+                jcrop.enable();
                   
             };
             jcrop.onSelectCallback = function() {};
             jcrop.editSelection = function(selectionID, selectionType, onSelectCallback) {
-                jcrop.instance().enable();
+                
                 var selection = jcrop.findSelection(selectionID, selectionType);
                 jcrop.currentSelection(selection);
                 if(selection != null) {
                     jcrop.instance().animateTo([selection.x1(), selection.y1(), selection.x2(), selection.y2()]);
                 }
+
+                //don't have to necessarily enable it
+                jcrop.enable();
+                
             };
         }
 

@@ -3,4 +3,12 @@
     <canvas data-bind="pastable: { value: data.url, active: state.active, source: app.paste.pasteURL, onAfterPaste: actions.uploadFile }"></canvas>
     <img data-bind="jcrop: jcrop, attr: { src: data.url }" />
     
+    <!-- ko ifnot: jcrop.active -->
+        <!-- ko foreach: data.selections -->
+        <div class="selection" data-bind="attr:{}">
+            <span data-bind="text: referenceType"></span>
+        </div>
+        <!-- /ko -->
+    <!-- /ko -->
+
 </script>
