@@ -10,7 +10,7 @@ ko.bindingHandlers.pastable = {
         var source = valueAccessor().source;
         var onAfterPaste = valueAccessor().onAfterPaste;
 
-        debugger;
+    
         //draw the image on canvas
         if(source() != null && active()) {
             

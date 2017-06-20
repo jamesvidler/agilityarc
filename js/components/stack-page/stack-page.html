@@ -16,7 +16,7 @@
                                     <input-text params="field: properties.fields.type"></input-text>
                                     <input-text params="field: properties.fields.path"></input-text>
                                     <input-pagetemplate params="field: properties.fields.pageTemplate"></input-pagetemplate>
-                                    <input-image params="field: properties.fields.image"></input-image>
+                                    <!--<input-image params="field: properties.fields.image"></input-image>-->
                                     
 
                                     <button data-bind="click: actions.close">ok</button>
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="designer">
-                    <designer params="data: { url: properties.fields.image.url }, state: { active: state.active }"></div>
+                    <designer params="data: { url: properties.fields.image.url }, state: { active: state.active }, designer: designer"></div>
                 </div>
             </div>
         </script>

@@ -46,7 +46,7 @@ app.viewmodels.input = new function() {
             }
         }
     };
-    self.pageTemplate = function(pageTemplates, value, label) {
+    self.pageTemplate = function(pageTemplates, value, label, drawPageTemplate) {
         
         this.id = app.utils.makeid();
         this.label = label;
@@ -55,6 +55,7 @@ app.viewmodels.input = new function() {
         this.newPageTemplate = function() {
             app.menu.click.newPageTemplate();
         }
+        this.drawPageTemplate = drawPageTemplate;
 
     };
     self.pageModules = function(pageTemplate, valueAry, label) {

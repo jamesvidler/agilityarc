@@ -1,6 +1,6 @@
 ko.components.register('designer', {
     viewModel: function(params) {
-        debugger;
+    
         var self = this;
 
         self.data = new function() {
@@ -47,6 +47,42 @@ ko.components.register('designer', {
             }
         }
 
+        self.jcrop = new function() {
+            var jcrop = this;
+            jcrop.instance = ko.observable(null);
+            jcrop.onSelect = function(c) {
+                console.log('onSelect', c);
+                jcrop.customOnSelect(c);
+            };
+            jcrop.onChange = function(c) {
+                console.log('onChange', c);
+                jcrop.customOnChange(c);
+            };
+            jcrop.onRelease = function(c) {
+                console.log('onRelease', c);
+            }
+            jcrop.onInit = function(jcropInstance) {
+                console.log('init fired');
+                jcrop.instance(jcropInstance);
+
+                //disable this by default at first
+                jcrop.instance().disable();
+            };
+            jcrop.onDispose = function() {
+                console.log('jcrop destroyed');
+                jcrop.instance().destroy();
+            };
+            jcrop.newSelection = function(onChange, onSelect) {
+                
+                jcrop.instance().enable();
+                jcrop.customOnChange = onChange;
+                jcrop.customOnSelect = onSelect;
+            };
+            jcrop.customOnChange = function() {};
+            jcrop.customOnSelect = function() {};
+        }
+
+        params.designer(self);
 
     },
     template: { 

@@ -42,6 +42,16 @@ var app = new function() {
                 this.moduleZones = ko.observableArray([]);
             }
             
+            a.selection = function() {
+                this.referenceID = ko.observable(null);
+                this.x1 = ko.observable(null);
+                this.y1 = ko.observable(null);
+                this.x2 = ko.observable(null);
+                this.y2 = ko.observable(null);
+                this.w = ko.observable(null);
+                this.h = ko.observable(null);
+            }
+
             a.moduleZone = function() {
                 this.id = self.utils.makeid();
                 this.name = ko.observable("New Module Zone");
@@ -57,6 +67,7 @@ var app = new function() {
                 this.pageTemplate = ko.observable("");
                 this.moduleZones = ko.observable({});
                 this.image = new a.image();
+                this.selections = ko.observableArray([]);
             }
 
             a.pageModuleZone = function() {
