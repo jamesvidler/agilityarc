@@ -42,8 +42,9 @@ var app = new function() {
                 this.moduleZones = ko.observableArray([]);
             }
             
-            a.selection = function() {
-                this.referenceID = ko.observable(null);
+            a.selection = function(id, type) {
+                this.referenceID = ko.observable(id);
+                this.referenceType = ko.observable(type);
                 this.x1 = ko.observable(null);
                 this.y1 = ko.observable(null);
                 this.x2 = ko.observable(null);
@@ -134,7 +135,7 @@ var app = new function() {
             delete objToSave.__ko_mapping__;
             var savedJSON = JSON.stringify(objToSave);
             localStorage.setItem('project', savedJSON);
-            console.log('project saved!', savedJSON);
+            console.log('project saved!');
         },
         op.new = function() {
             var newP = new self.objects.project();
@@ -248,19 +249,13 @@ var app = new function() {
 
             try {
                 
-                console.log('existing project found', p);
-
                 var data = JSON.parse(p);
                 var existingP = ko.mapping.fromJS(data);
                 
-
                 var blank = new self.objects.project();
                 var currentP = ko.mapping.fromJS(existingP);
 
                 currentP = $.extend(blank, currentP);
-
-
-                console.log('updated project on load to latest schema', currentP);
 
                 self.project(currentP);
                 self.operations.save();

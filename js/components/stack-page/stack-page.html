@@ -20,6 +20,8 @@
                                     
 
                                     <button data-bind="click: actions.close">ok</button>
+                                    <button data-bind="click: actions.clearSelections">Clear Selections</button>
+                                    <button data-bind="click: actions.editPageTemplate">Edit PageTemplate</button>
                                 </div>
                             </div>
                         </form>
@@ -27,7 +29,7 @@
                 </div>
 
                 <div class="designer">
-                    <designer params="data: { url: properties.fields.image.url }, state: { active: state.active }, designer: designer"></div>
+                    <designer params="data: { url: properties.fields.image.url, selections: data.selections }, state: { active: state.active }, designer: designer"></div>
                 </div>
             </div>
         </script>

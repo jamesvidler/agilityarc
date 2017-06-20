@@ -3,21 +3,40 @@ ko.components.register('stack-page', {
         
         var self = this;
         
+        self.data = {
+            selections: new function() {
+                //initialize selections if we don't have any
+                if(!params.data.selections) {
+                    params.data.selections = ko.observableArray([]);
+                }
+
+                return params.data.selections;
+            }
+        }
+
 
         self.actions = new function() {
             var actions = this;
             actions.close = function() {
                 app.stack.remove("stack-page", params);
             };
+            actions.clearSelections = function() {
+                params.data.selections([]);
+                app.operations.save();
+            };
             actions.drawPageTemplate = function() {
 
-                self.designer().jcrop.newSelection(function(c) {
-                    //onChange
-                }, function(c) {
-                    //onSelect
-                    debugger;
-                });
+                //initialize the selection on the image
+                self.designer().jcrop.newSelection(-1, "PageTemplate", function() {
+                    //on selected
+                })
             };
+            actions.editPageTemplate = function() {
+                //initialize the selection on the image
+                self.designer().jcrop.editSelection(-1, "PageTemplate", function() {
+                    //on selected
+                })
+            }
         }
 
         self.state = {

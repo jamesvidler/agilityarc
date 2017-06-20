@@ -6,6 +6,7 @@ ko.components.register('designer', {
         self.data = new function() {
             var d = this;
             d.url = params.data.url;
+            d.selections = params.data.selections;
         }
 
         self.state = new function() {
@@ -50,13 +51,21 @@ ko.components.register('designer', {
         self.jcrop = new function() {
             var jcrop = this;
             jcrop.instance = ko.observable(null);
+            jcrop.currentSelection = ko.observable(null);
+            jcrop.updateSelection = function(c) {
+                jcrop.currentSelection().x1(c.x);
+                jcrop.currentSelection().x2(c.x2);
+                jcrop.currentSelection().y1(c.y);
+                jcrop.currentSelection().y2(c.y2);
+                jcrop.currentSelection().w(c.w);
+                jcrop.currentSelection().h(c.h);
+            };
             jcrop.onSelect = function(c) {
-                console.log('onSelect', c);
-                jcrop.customOnSelect(c);
+                jcrop.updateSelection(c);
+                app.operations.save();
             };
             jcrop.onChange = function(c) {
-                console.log('onChange', c);
-                jcrop.customOnChange(c);
+
             };
             jcrop.onRelease = function(c) {
                 console.log('onRelease', c);
@@ -72,14 +81,43 @@ ko.components.register('designer', {
                 console.log('jcrop destroyed');
                 jcrop.instance().destroy();
             };
-            jcrop.newSelection = function(onChange, onSelect) {
-                
-                jcrop.instance().enable();
-                jcrop.customOnChange = onChange;
-                jcrop.customOnSelect = onSelect;
+            jcrop.findSelection = function(selectionID, selectionType) {
+                var selections = self.data.selections();
+                var selection = null;
+                for(var i in selections) {
+                    if(selectionID == selections[i].referenceID() && selectionType == selections[i].referenceType()) {
+                        //this is an existing selection we are re-drawing
+                        selection = selections[i];
+                    } 
+                }
+                return selection;
             };
-            jcrop.customOnChange = function() {};
-            jcrop.customOnSelect = function() {};
+            jcrop.newSelection = function(selectionID, selectionType, onSelectCallback) {
+                
+                var selection = jcrop.findSelection(selectionID, selectionType);
+
+                if(selection == null) {
+                    //this is brand new
+                    selection = new app.objects.agility.selection(selectionID, selectionType, null);
+                    self.data.selections().push(selection);
+                }
+
+                jcrop.currentSelection(selection);
+
+                jcrop.onSelectCallback = onSelectCallback;
+
+                jcrop.instance().enable();
+                  
+            };
+            jcrop.onSelectCallback = function() {};
+            jcrop.editSelection = function(selectionID, selectionType, onSelectCallback) {
+                jcrop.instance().enable();
+                var selection = jcrop.findSelection(selectionID, selectionType);
+                jcrop.currentSelection(selection);
+                if(selection != null) {
+                    jcrop.instance().animateTo([selection.x1(), selection.y1(), selection.x2(), selection.y2()]);
+                }
+            };
         }
 
         params.designer(self);
