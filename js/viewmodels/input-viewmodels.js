@@ -46,7 +46,7 @@ app.viewmodels.input = new function() {
             }
         }
     };
-    self.pageTemplate = function(pageTemplates, value, label, drawPageTemplate) {
+    self.pageTemplate = function(pageTemplates, selections, value, label, drawPageTemplateSection, editPageTemplateSection) {
         
         this.id = app.utils.makeid();
         this.label = label;
@@ -55,7 +55,48 @@ app.viewmodels.input = new function() {
         this.newPageTemplate = function() {
             app.menu.click.newPageTemplate();
         }
-        this.drawPageTemplate = drawPageTemplate;
+        this.drawPageTemplateSection = drawPageTemplateSection;
+        this.editPageTemplateSection = editPageTemplateSection;
+        this.selections = selections;
+
+        this.hasPageTemplateSection = ko.pureComputed({
+            read: function() {
+                var selections_unwrapped = ko.unwrap(selections);
+                
+                for(var i in selections_unwrapped) {
+                    if(selections_unwrapped[i].referenceType() == "PageTemplate") {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        })
+
+        this.onValue = this.value.subscribe(function(val) {
+
+            var selections_unwrapped = ko.unwrap(selections);
+            var pageTemplateSelection = null;
+            var matchingSelection = null;
+            for(var i in selections_unwrapped) {
+                if(selections_unwrapped[i].referenceType() == "PageTemplate") {
+                    pageTemplateSelection = selections_unwrapped[i];
+
+                    if(pageTemplateSelection.referenceID() == val) {
+                        matchingSelection = selections_unwrapped[i];
+                    }
+                }
+
+            }
+
+            if(matchingSelection == null && pageTemplateSelection != null) {
+                //remove the orphaned selection
+                selections.remove(pageTemplateSelection);
+            }
+        });
+
+        this.dispose = function() {
+            this.onValue.dispose();
+        }
 
     };
     self.pageModules = function(pageTemplate, valueAry, label) {

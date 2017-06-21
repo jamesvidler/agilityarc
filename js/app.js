@@ -43,6 +43,7 @@ var app = new function() {
             }
             
             a.selection = function(id, type) {
+                
                 this.referenceID = ko.observable(id);
                 this.referenceType = ko.observable(type);
                 this.x1 = ko.observable(null);
@@ -51,16 +52,6 @@ var app = new function() {
                 this.y2 = ko.observable(null);
                 this.w = ko.observable(null);
                 this.h = ko.observable(null);
-                this.style = ko.computed(function() {
-                    debugger;
-                    var x1 = ko.unwrap(this.x1);
-                    var x2 = ko.unwrap(this.x2);
-                    var x3 = ko.unwrap(this.x3);
-                    var x4 = ko.unwrap(this.x4);
-                })
-                this.dispose = function() {
-                    this.style.dispose();
-                }
             }
 
             a.moduleZone = function() {
@@ -260,6 +251,7 @@ var app = new function() {
             try {
                 
                 var data = JSON.parse(p);
+                
                 var existingP = ko.mapping.fromJS(data);
                 
                 var blank = new self.objects.project();

@@ -4,7 +4,11 @@
                 <label>Page Templates</form>
                 <select class="form-control" data-bind="options: options, optionsValue: 'id', optionsText: 'name', value: value"></select>
                 <button data-bind="click: newPageTemplate">New Page Template</button>
-                <button data-bind="click: drawPageTemplate">Draw Page Template</button>
+
+                <!-- ko if: value() != null && value().length > 0 -->
+                <button data-bind="click: drawPageTemplateSection, visible: !hasPageTemplateSection()">Draw Selection</button>
+                <button data-bind="click: editPageTemplateSection, visible: hasPageTemplateSection()">Edit Selection</button>
+                <!-- /ko -->
             </div>
         </script>
         <!-- END INPUT PAGETEMPLATE -->

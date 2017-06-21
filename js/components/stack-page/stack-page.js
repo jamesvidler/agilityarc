@@ -24,16 +24,16 @@ ko.components.register('stack-page', {
                 params.data.selections([]);
                 app.operations.save();
             };
-            actions.drawPageTemplate = function() {
+            actions.drawPageTemplateSection = function() {
 
                 //initialize the selection on the image
-                self.designer().jcrop.newSelection(-1, "PageTemplate", function() {
+                self.designer().jcrop.newSelection(params.data.pageTemplate(), "PageTemplate", function() {
                     //on selected
                 })
             };
-            actions.editPageTemplate = function() {
+            actions.editPageTemplateSection = function() {
                 //initialize the selection on the image
-                self.designer().jcrop.editSelection(-1, "PageTemplate", function() {
+                self.designer().jcrop.editSelection(params.data.pageTemplate(), "PageTemplate", function() {
                     //on selected
                 })
             }
@@ -51,7 +51,14 @@ ko.components.register('stack-page', {
                 f.name = new app.viewmodels.input.text(params.data.name, "Page Name");
                 f.type = new app.viewmodels.input.text(params.data.type, "Type");
                 f.path = new app.viewmodels.input.text(params.data.path, "Path");
-                f.pageTemplate = new app.viewmodels.input.pageTemplate(app.project().template.pageTemplates, params.data.pageTemplate, "Page Template", self.actions.drawPageTemplate);
+                f.pageTemplate = new app.viewmodels.input.pageTemplate(
+                    app.project().template.pageTemplates,
+                    params.data.selections,
+                    params.data.pageTemplate,
+                    "Page Template",
+                    self.actions.drawPageTemplateSection,
+                    self.actions.editPageTemplateSection
+                );
                 f.modules = new app.viewmodels.input.pageModules(params.data.moduleZones, "Modules");
                 f.image = new app.viewmodels.input.image(params.data.image.url, params.data.image.base64, "Image");
             }

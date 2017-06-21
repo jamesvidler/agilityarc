@@ -2,6 +2,10 @@
 
     <canvas data-bind="pastable: { value: data.url, active: state.active, source: app.paste.pasteURL, onAfterPaste: actions.uploadFile }"></canvas>
     <img data-bind="jcrop: jcrop, attr: { src: data.url }" />
+
+    <div class="action-buttons">
+        <button data-bind="click: jcrop.confirmSelection, visible: jcrop.active">Confirm Selection</button>
+    </div>
     
     <!-- ko ifnot: jcrop.active -->
         <!-- ko foreach: data.selections -->

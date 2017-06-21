@@ -45,7 +45,8 @@ ko.components.register('designer', {
                 var formData = new FormData();
                 formData.append("pastedFile", file);
                 xhr.send(formData);
-            }
+            };
+
         }
 
         self.jcrop = new function() {
@@ -81,8 +82,8 @@ ko.components.register('designer', {
             jcrop.onChange = function(c) {
 
             };
-            jcrop.onRelease = function(c) {
-                console.log('onRelease', c);
+            jcrop.onRelease = function() {
+                console.log('onRelease');
                 jcrop.disable();
             }
             jcrop.onInit = function(jcropInstance) {
@@ -136,6 +137,11 @@ ko.components.register('designer', {
                 jcrop.enable();
                 
             };
+            jcrop.confirmSelection = function() {
+                jcrop.instance().release();
+                jcrop.disable();
+            }
+
         }
 
         params.designer(self);
