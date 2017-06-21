@@ -200,7 +200,7 @@ var app = new function() {
             for(var i = 0; i < items.length; i++) {
                 items[i].params.active(false);
                 //check duplicates by name and component
-                if(s.find())
+                
                 if(componentName === items[i].name && items[i].params.data.id === data.id && !existFlag) {
                     //we have a duplicate, increase the z-index to be at the top
                     s.items()[i].params.order(items.length);

@@ -70,7 +70,7 @@ ko.components.register('designer', {
                 jcrop.instance().disable();
             };
             jcrop.destroy = function() {
-                self.active(false);
+                jcrop.active(false);
                 console.log('jcrop destroyed');
                 jcrop.instance().destroy();
             }
@@ -129,7 +129,7 @@ ko.components.register('designer', {
                 var selection = jcrop.findSelection(selectionID, selectionType);
                 jcrop.currentSelection(selection);
                 if(selection != null) {
-                    jcrop.instance().animateTo([selection.x1(), selection.y1(), selection.x2(), selection.y2()]);
+                    jcrop.instance().setSelect([selection.x1(), selection.y1(), selection.x2(), selection.y2()]);
                 }
 
                 //don't have to necessarily enable it
