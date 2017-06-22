@@ -67,15 +67,19 @@ var app = new function() {
                 this.type = ko.observable("");
                 this.path = ko.observable("");
                 this.pageTemplate = ko.observable("");
-                this.moduleZones = ko.observable({});
+                this.moduleZones = ko.observableArray([]);
                 this.image = new a.image();
                 this.selections = ko.observableArray([]);
             }
 
-            a.pageModuleZone = function() {
+            a.pageModuleZone = function(mz) {
+                var contentZoneID = "";
+                if(mz) {
+                    contentZoneID = mz.id();
+                }
                 this.id = self.utils.makeid();
-                this.contentZone = ko.observable("");
-                this.modules = ko.observable({});
+                this.contentZoneID = ko.observable(contentZoneID);
+                this.modules = ko.observable([]);
             }
 
             a.image = function() {
@@ -251,7 +255,7 @@ var app = new function() {
             try {
                 
                 var data = JSON.parse(p);
-                
+                console.log(data);
                 var existingP = ko.mapping.fromJS(data);
                 
                 var blank = new self.objects.project();
@@ -287,6 +291,14 @@ var app = new function() {
         u.state = new function() {
             this.xhrTemplateRequestPool = [];
         },
+        u.cleanPageModuleZones = function() {
+            var pages = ko.unwrap(app.project().pages);
+            for(var i in pages) {
+                app.project().pages()[i].moduleZones = ko.observableArray([]);
+            }
+            debugger;
+            app.operations.save();
+        };
         u.makeid = function() {
             var text = "";
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

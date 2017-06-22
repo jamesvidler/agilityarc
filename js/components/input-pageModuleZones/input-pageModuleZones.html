@@ -1,0 +1,17 @@
+<!-- INPUT PAGE MODULE ZONES -->
+    <script id="input-pagemodulezones-template" type="text/html">
+        <div class="form-group">
+            <label>Page Module Zones</form>
+        
+
+            <!-- ko if: hasModuleZones -->
+                <div data-bind="foreach: moduleZonesArryValue">
+                    <input-pagemodulezone params="{ pageTemplate: $parent.pageTemplate, data: $data, moduleZonesArryValue: $parent.moduleZonesArryValue }"></input-pagemodulezone>
+                </div>
+            <!-- /ko -->
+            <!-- ko ifnot: hasModuleZones -->
+                <span> No Module Zones yet</span>
+            <!-- /ko -->
+        </div>
+    </script>
+    <!-- END INPUT PAGE MODULE ZONES -->

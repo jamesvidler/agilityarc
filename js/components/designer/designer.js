@@ -94,7 +94,9 @@ ko.components.register('designer', {
                 jcrop.disable();
             };
             jcrop.onDispose = function() {
-                jcrop.destroy();
+                if(jcrop.instance() != null) {
+                    jcrop.destroy();
+                }
             };
             jcrop.findSelection = function(selectionID, selectionType) {
                 var selections = self.data.selections();

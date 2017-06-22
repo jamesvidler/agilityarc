@@ -59,7 +59,14 @@ ko.components.register('stack-page', {
                     self.actions.drawPageTemplateSection,
                     self.actions.editPageTemplateSection
                 );
-                f.modules = new app.viewmodels.input.pageModules(params.data.moduleZones, "Modules");
+                f.moduleZones = new app.viewmodels.input.pageModuleZones(
+                    app.project().template.pageTemplates,
+                    params.data.pageTemplate,
+                    params.data.selections,
+                    params.data.moduleZones,
+                    function() {},
+                    function() {}
+                );
                 f.image = new app.viewmodels.input.image(params.data.image.url, params.data.image.base64, "Image");
             }
 
