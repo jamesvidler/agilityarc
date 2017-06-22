@@ -6,8 +6,12 @@
                 <button data-bind="click: newPageTemplate">New Page Template</button>
 
                 <!-- ko if: value() != null && value().length > 0 -->
-                <button data-bind="click: drawPageTemplateSection, visible: !hasPageTemplateSection()">Draw Selection</button>
-                <button data-bind="click: editPageTemplateSection, visible: hasPageTemplateSection()">Edit Selection</button>
+                <!-- ko ifnot: hasPageTemplateSection -->
+                <button data-bind="click: actions.drawPageTemplateSection">Draw Selection</button>
+                <!-- /ko -->
+                <!-- ko if: hasPageTemplateSection -->
+                <button data-bind="click: actions.editPageTemplateSection">Edit Selection</button>
+                <!-- /ko -->
                 <!-- /ko -->
 
             </div>

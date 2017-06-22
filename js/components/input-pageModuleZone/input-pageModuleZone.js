@@ -4,7 +4,11 @@ ko.components.register('input-pagemodulezone', {
         
         var self = this;
 
+        self.designer = params.designer
+
         self.moduleZonesArryValue = params.moduleZonesArryValue;
+
+        self.selections = params.selections;
 
         self.data = params.data;
 
@@ -12,8 +16,34 @@ ko.components.register('input-pagemodulezone', {
 
         self.pageTemplateModuleZone = ko.observable(null);
 
+        self.hasSection = ko.computed(function() {
+            
+            var selections_unwrapped = ko.unwrap(self.selections);
+            
+            for(var i in selections_unwrapped) {
+                if(selections_unwrapped[i].referenceType() == "ModuleZone" && selections_unwrapped[i].referenceID() == self.data.contentZoneID()) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
         self.removePageModuleZone = function() {
             self.moduleZonesArryValue.remove(self.data);
+        }
+
+        self.actions = new function() {
+            var actions = this;
+            actions.drawNewSection = function() {
+                self.designer().jcrop.newSelection(self.data.contentZoneID(), "ModuleZone", function() {
+                    //on selected
+                })
+            };
+            actions.editSection = function() {
+                self.designer().jcrop.editSelection(self.data.contentZoneID(), "ModuleZone", function() {
+                    //on selected
+                })
+            };
         }
         
         self.hasZone = ko.pureComputed({
@@ -37,7 +67,9 @@ ko.components.register('input-pagemodulezone', {
             self.removePageModuleZone();
         }
 
-        
+        self.dispose = function() {
+            self.hasSection.dispose();
+        }
 
     },
     template: { 

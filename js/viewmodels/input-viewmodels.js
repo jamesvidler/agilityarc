@@ -47,17 +47,16 @@ app.viewmodels.input = new function() {
         }
     };
     
-    self.pageModuleZones = function(pageTemplatesArrValue, pageTemplateIDValue, selections, moduleZonesArryValue, drawModuleZoneSection, editModuleZoneSection) {
+    self.pageModuleZones = function(pageTemplatesArrValue, pageTemplateIDValue, selections, moduleZonesArryValue, designer) {
         
         
-
+        
         var pmz = this;
+        pmz.designer = designer;
         pmz.id = app.utils.makeid;
         pmz.pageTemplatesArrValue = pageTemplatesArrValue;
         pmz.pageTemplateIDValue = pageTemplateIDValue;
         pmz.moduleZonesArryValue = moduleZonesArryValue; //observable array
-        pmz.drawPageTemplateSection = drawModuleZoneSection;
-        pmz.editPageTemplateSection = editModuleZoneSection;
         pmz.selections = selections;
 
         pmz.pageTemplate = ko.computed(function() {
@@ -83,6 +82,7 @@ app.viewmodels.input = new function() {
                 if(moduleZones.length > 0) {
 
                     var pageModuleZones = ko.unwrap(pmz.moduleZonesArryValue);
+                    var sortedPageModuleZones = [];
                     for(var i in moduleZones) {
                         var thisPageTemplateModuleZone = moduleZones[i];
                         var foundPageTemplateMzInPageMzs = false;
@@ -90,15 +90,17 @@ app.viewmodels.input = new function() {
                             var thisPageModuleZone = pageModuleZones[x];
                             if(thisPageTemplateModuleZone.id() == thisPageModuleZone.contentZoneID()) {
                                 foundPageTemplateMzInPageMzs = true;
+                                sortedPageModuleZones.push(thisPageModuleZone);
                             }
                         }
                         if(!foundPageTemplateMzInPageMzs) {
                             //add in the missing one
-                            pmz.moduleZonesArryValue.push(new app.objects.agility.pageModuleZone(thisPageTemplateModuleZone));
+                            var newZone = new app.objects.agility.pageModuleZone(thisPageTemplateModuleZone);
+                            sortedPageModuleZones.push(newZone);
                         }
-
-
                     }
+
+                    pmz.moduleZonesArryValue(sortedPageModuleZones);
 
                     return true;
                 }
@@ -106,10 +108,10 @@ app.viewmodels.input = new function() {
             return false;
         });
     };
-    self.pageTemplate = function(pageTemplates, selections, value, label, drawPageTemplateSection, editPageTemplateSection) {
+    self.pageTemplate = function(pageTemplates, selections, value, label, designer) {
         
         var pt = this;
-
+        pt.designer = designer;
         pt.id = app.utils.makeid();
         pt.label = label;
         pt.value = value;
@@ -117,21 +119,36 @@ app.viewmodels.input = new function() {
         pt.newPageTemplate = function() {
             app.menu.click.newPageTemplate();
         }
-        pt.drawPageTemplateSection = drawPageTemplateSection;
-        pt.editPageTemplateSection = editPageTemplateSection;
+
+        pt.actions = new function() {
+            var actions = this;
+            actions.drawPageTemplateSection = function() {
+
+                //initialize the selection on the image
+                pt.designer().jcrop.newSelection(pt.value(), "PageTemplate", function() {
+                    //on selected
+                })
+            };
+            actions.editPageTemplateSection = function() {
+                //initialize the selection on the image
+                pt.designer().jcrop.editSelection(pt.value(), "PageTemplate", function() {
+                    //on selected
+                })
+            }
+        }
+
         pt.selections = selections;
 
-        pt.hasPageTemplateSection = ko.pureComputed({
-            read: function() {
-                var selections_unwrapped = ko.unwrap(selections);
-                
-                for(var i in selections_unwrapped) {
-                    if(selections_unwrapped[i].referenceType() == "PageTemplate") {
-                        return true;
-                    }
+        pt.hasPageTemplateSection = ko.computed(function() {
+            var selections_unwrapped = ko.unwrap(selections);
+            
+            for(var i in selections_unwrapped) {
+                if(selections_unwrapped[i].referenceType() == "PageTemplate") {
+                    return true;
                 }
-                return false;
             }
+            return false;
+            
         })
 
         pt.pageTemplate = ko.computed(function() {
@@ -174,6 +191,7 @@ app.viewmodels.input = new function() {
         pt.dispose = function() {   
             pt.onValue.dispose();
             pt.pageTemplate.dispose();
+            pt.hasPageTemplateSection.dispose();
   
         }
 

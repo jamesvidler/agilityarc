@@ -3,6 +3,8 @@
         <div class="form-group">
             <!-- ko if: hasZone -->
             <span data-bind="text: pageTemplateModuleZone().name"></span>
+            <button data-bind="click: actions.drawNewSection, visible: !hasSection()">Draw Selection</button>
+            <button data-bind="click: actions.editSection, visible: hasSection()">Edit Selection</button>
             <!-- /ko -->
         </div>
     </script>

@@ -9,10 +9,10 @@
     
     <!-- ko ifnot: jcrop.active -->
         <!-- ko foreach: data.selections -->
-        <div class="selection" data-bind="style: { left: x1, top: y1, width: w, height: h }">
-            <span data-bind="text: referenceType"></span>
-        </div>
+        <selection params="{ data: $data }"></selection>
         <!-- /ko -->
     <!-- /ko -->
+
+    <pre data-bind="text: ko.toJSON(data.selections)"></pre>
 
 </script>

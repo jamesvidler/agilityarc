@@ -6,7 +6,7 @@
 
             <!-- ko if: hasModuleZones -->
                 <div data-bind="foreach: moduleZonesArryValue">
-                    <input-pagemodulezone params="{ pageTemplate: $parent.pageTemplate, data: $data, moduleZonesArryValue: $parent.moduleZonesArryValue }"></input-pagemodulezone>
+                    <input-pagemodulezone params="{ pageTemplate: $parent.pageTemplate, selections: $parent.selections, data: $data, moduleZonesArryValue: $parent.moduleZonesArryValue, designer: $parent.designer }"></input-pagemodulezone>
                 </div>
             <!-- /ko -->
             <!-- ko ifnot: hasModuleZones -->

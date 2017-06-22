@@ -3,6 +3,9 @@ ko.components.register('stack-page', {
         
         var self = this;
         
+        //this will get initialized by the designer child component
+        self.designer = ko.observable(null);
+
         self.data = {
             selections: new function() {
                 //initialize selections if we don't have any
@@ -56,16 +59,14 @@ ko.components.register('stack-page', {
                     params.data.selections,
                     params.data.pageTemplate,
                     "Page Template",
-                    self.actions.drawPageTemplateSection,
-                    self.actions.editPageTemplateSection
+                    self.designer
                 );
                 f.moduleZones = new app.viewmodels.input.pageModuleZones(
                     app.project().template.pageTemplates,
                     params.data.pageTemplate,
                     params.data.selections,
                     params.data.moduleZones,
-                    function() {},
-                    function() {}
+                    self.designer
                 );
                 f.image = new app.viewmodels.input.image(params.data.image.url, params.data.image.base64, "Image");
             }
@@ -73,8 +74,7 @@ ko.components.register('stack-page', {
             
         }
 
-        //this will get initialized by the designer child component
-        self.designer = ko.observable(null);
+        
 
         
 

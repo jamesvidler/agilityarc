@@ -43,7 +43,6 @@ var app = new function() {
             }
             
             a.selection = function(id, type) {
-                
                 this.referenceID = ko.observable(id);
                 this.referenceType = ko.observable(type);
                 this.x1 = ko.observable(null);
@@ -127,6 +126,11 @@ var app = new function() {
                 this.description = ko.observable("");
                 this.fields = [];
                 this.outputTemplate = ko.observable("");
+            }
+
+            a.selectableThing = function(id, obj) {
+                this.id = id;
+                this.data = obj;
             }
         }
 
@@ -418,6 +422,41 @@ var app = new function() {
         p.pasteURL = ko.observable(null);
     }
 
+    self.dataAccess = new function() {
+        var dataAccess = this;
+        dataAccess.getPageTemplateByID = function(id) {
+            var pageTemplates = ko.unwrap(self.project().template.pageTemplates);
+            for(var i in pageTemplates) {
+                if(pageTemplates[i].id() === id) {
+                    return pageTemplates[i];
+                }
+            }
+            return null;
+        }
+
+        dataAccess.getPageTemplateModuleZoneByID = function(id) {
+            var pageTemplates = ko.unwrap(self.project().template.pageTemplates);
+            for(var i in pageTemplates) {
+                var moduleZones = ko.unwrap(pageTemplates[i].moduleZones);
+                for(var x in moduleZones) {
+                    if(moduleZones[x].id() === id) {
+                        return moduleZones[x];
+                    }
+                }
+            }
+            return null;
+        }
+
+        dataAccess.getModuleDefinitionByID = function() {
+            var moduleDefinitions = ko.unwrap(self.project().template.moduleDefinitions);
+            for(var i in moduleDefinitions) {
+                if(moduleDefinitions[i].id() === id) {
+                    return moduleDefinitions[i];
+                }
+            }
+            return null;
+        }
+    }
 
     self.onLoad = function() {
         //on load        

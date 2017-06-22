@@ -9,6 +9,8 @@ ko.components.register('designer', {
             d.selections = params.data.selections;
         }
 
+
+
         self.state = new function() {
             var state = this;
             state.active = params.state.active;
@@ -116,7 +118,7 @@ ko.components.register('designer', {
                 if(selection == null) {
                     //this is brand new
                     selection = new app.objects.agility.selection(selectionID, selectionType, null);
-                    self.data.selections().push(selection);
+                    self.data.selections.push(selection);
                 }
 
                 jcrop.currentSelection(selection);
