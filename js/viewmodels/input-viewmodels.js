@@ -64,7 +64,7 @@ app.viewmodels.input = new function() {
             var pageTemplates_unwrapped = ko.unwrap(pmz.pageTemplatesArrValue);
             
             for(var i in pageTemplates_unwrapped) {
-                if(pageTemplates_unwrapped[i].id() === thisPageTemplateID) {
+                if(ko.unwrap(pageTemplates_unwrapped[i].id) === thisPageTemplateID) {
                     return pageTemplates_unwrapped[i];
                 }
             }
@@ -88,7 +88,7 @@ app.viewmodels.input = new function() {
                         var foundPageTemplateMzInPageMzs = false;
                         for(var x in pageModuleZones) {
                             var thisPageModuleZone = pageModuleZones[x];
-                            if(thisPageTemplateModuleZone.id() == thisPageModuleZone.contentZoneID()) {
+                            if(ko.unwrap(thisPageTemplateModuleZone.id) == thisPageModuleZone.contentZoneID()) {
                                 foundPageTemplateMzInPageMzs = true;
                                 sortedPageModuleZones.push(thisPageModuleZone);
                             }
@@ -156,7 +156,7 @@ app.viewmodels.input = new function() {
             var pageTemplates_unwrapped = ko.unwrap(pageTemplates);
             
             for(var i in pageTemplates_unwrapped) {
-                if(pageTemplates_unwrapped[i].id() === thisPageTemplateID) {
+                if(ko.unwrap(pageTemplates_unwrapped[i].id) === thisPageTemplateID) {
                     return pageTemplates_unwrapped[i];
                 }
             }

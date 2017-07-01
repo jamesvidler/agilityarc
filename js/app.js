@@ -74,7 +74,7 @@ var app = new function() {
             a.pageModuleZone = function(mz) {
                 var contentZoneID = "";
                 if(mz) {
-                    contentZoneID = mz.id();
+                    contentZoneID = ko.unwrap(mz.id);
                 }
                 this.id = self.utils.makeid();
                 this.contentZoneID = ko.observable(contentZoneID);

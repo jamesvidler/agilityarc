@@ -57,7 +57,7 @@ ko.components.register('input-pagemodulezone', {
         if(self.pageTemplate() != null) {
             var thisPageTemplateModuleZones = ko.unwrap(self.pageTemplate().moduleZones);
             for(var i in thisPageTemplateModuleZones) {
-                if(thisPageTemplateModuleZones[i].id() == params.data.contentZoneID()) {
+                if(ko.unwrap(thisPageTemplateModuleZones[i].id) == params.data.contentZoneID()) {
                     self.pageTemplateModuleZone(thisPageTemplateModuleZones[i]);
                 }
             }
