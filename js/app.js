@@ -83,7 +83,7 @@ var app = new function() {
 
             a.image = function() {
                 this.id = self.utils.makeid();
-                this.url = ko.observable("");
+                this.url = ko.observable('https://placeholdit.co//i/745x500?&bg=f1f1f1&fc=000000&text=Paste%20an%20Image%20Here');
                 this.base64 = ko.observable("");
             }
 

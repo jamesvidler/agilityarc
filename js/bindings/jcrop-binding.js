@@ -11,6 +11,7 @@ ko.bindingHandlers.jcrop = {
 
         var thisJcrop = null;
 
+
         $(element).Jcrop({
             onChange:   onChange,
             onSelect:   onSelect,

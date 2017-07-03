@@ -6,9 +6,9 @@ ko.components.register('designer', {
         self.data = new function() {
             var d = this;
             d.url = params.data.url;
+            d.oldUrl = ko.unwrap(d.url);
             d.selections = params.data.selections;
         }
-
 
 
         self.state = new function() {
@@ -89,6 +89,7 @@ ko.components.register('designer', {
                 jcrop.disable();
             }
             jcrop.onInit = function(jcropInstance) {
+                debugger;
                 console.log('init fired');
                 jcrop.instance(jcropInstance);
 
@@ -146,6 +147,22 @@ ko.components.register('designer', {
                 jcrop.disable();
             }
 
+        }
+
+
+        
+        self.on = {
+            urlChange: self.data.url.subscribe(function(newVal) {
+                if(newVal != self.data.oldUrl) {
+                    //url has changed!
+                    self.jcrop.instance().setImage(newVal);
+                    self.jcrop.disable();
+                }
+            })
+        }
+
+        self.dispose = function() {
+            self.on.urlChange.dispose();
         }
 
         params.designer(self);
