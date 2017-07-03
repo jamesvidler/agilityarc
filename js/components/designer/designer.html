@@ -7,11 +7,11 @@
         <button data-bind="click: jcrop.confirmSelection, visible: jcrop.active">Confirm Selection</button>
     </div>
     
-    <!-- ko ifnot: jcrop.active -->
+    
         <!-- ko foreach: data.selections -->
         <selection params="{ data: $data }"></selection>
         <!-- /ko -->
-    <!-- /ko -->
+    
 
     <pre data-bind="text: ko.toJSON(data.selections)"></pre>
 

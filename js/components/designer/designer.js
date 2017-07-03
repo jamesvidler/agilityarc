@@ -89,7 +89,7 @@ ko.components.register('designer', {
                 jcrop.disable();
             }
             jcrop.onInit = function(jcropInstance) {
-                debugger;
+                
                 console.log('init fired');
                 jcrop.instance(jcropInstance);
 
