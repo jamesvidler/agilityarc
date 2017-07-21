@@ -10,7 +10,7 @@ ko.bindingHandlers.jcrop = {
         var onDispose = valueAccessor().onDispose;
 
         var thisJcrop = null;
-
+        debugger;
 
         $(element).Jcrop({
             onChange:   onChange,

@@ -65,7 +65,7 @@ var app = new function() {
                 this.name = ko.observable("New Page");
                 this.type = ko.observable("");
                 this.path = ko.observable("");
-                this.pageTemplate = ko.observable("");
+                this.pageTemplate = ko.observable(null);
                 this.moduleZones = ko.observableArray([]);
                 this.image = new a.image();
                 this.selections = ko.observableArray([]);
@@ -414,9 +414,10 @@ var app = new function() {
                         var URLObj = window.URL || window.webkitURL;
                         var source = URLObj.createObjectURL(blob);
                         p.pasteURL(source);
+                        e.preventDefault();
                     }
                 }
-                e.preventDefault();
+                
             }
         }
         p.pasteURL = ko.observable(null);

@@ -1,5 +1,5 @@
 <script id="designer-template" type="text/html">
-
+    <input type="text" style="width: 100%" placeholder="enter a url" data-bind="value: data.url" />
     <canvas data-bind="pastable: { value: data.url, active: state.active, source: app.paste.pasteURL, onAfterPaste: actions.uploadFile }"></canvas>
     <img data-bind="jcrop: jcrop, attr: { src: data.url }" />
 
@@ -13,6 +13,6 @@
         <!-- /ko -->
     
 
-    <pre data-bind="text: ko.toJSON(data.selections)"></pre>
+    <pre data-bind="text: ko.toJSON($data)"></pre>
 
 </script>

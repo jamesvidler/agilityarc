@@ -115,7 +115,17 @@ app.viewmodels.input = new function() {
         pt.id = app.utils.makeid();
         pt.label = label;
         pt.value = value;
-        pt.options = pageTemplates;
+        pt.options = ko.pureComputed({
+            read: function() {
+                var pTs = ko.unwrap(pageTemplates);
+                if(pTs.length === 0) {
+                    return [{ id: null, name: 'No Templates yet...'}]
+                } else {
+                    return pTs;
+                }
+            },
+            owner: this
+        });
         pt.newPageTemplate = function() {
             app.menu.click.newPageTemplate();
         }
@@ -167,7 +177,7 @@ app.viewmodels.input = new function() {
 
 
         pt.onValue = pt.value.subscribe(function(val) {
-
+            
             var selections_unwrapped = ko.unwrap(selections);
             var pageTemplateSelection = null;
             var matchingSelection = null;

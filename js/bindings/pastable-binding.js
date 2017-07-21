@@ -1,8 +1,4 @@
 ko.bindingHandlers.pastable = {
-    cropImg: function(canvas, ctx, value, callback) {
-        
-
-    },
     update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
 
         var value = valueAccessor().value;
