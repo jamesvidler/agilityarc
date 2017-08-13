@@ -44,6 +44,9 @@ ko.components.register('input-pagemodulezone', {
                     //on selected
                 })
             };
+            actions.addModule = function() {
+                self.state.addingModule(true);
+            }
         }
         
         self.hasZone = ko.pureComputed({
@@ -52,6 +55,11 @@ ko.components.register('input-pagemodulezone', {
                 return pageTemplateModuleZone != null;
             }
         });
+
+        self.state = new function() {
+            var state = this;
+            state.addingModule = ko.observable(false);
+        }
 
 
         if(self.pageTemplate() != null) {

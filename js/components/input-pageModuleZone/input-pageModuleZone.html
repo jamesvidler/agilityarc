@@ -5,6 +5,12 @@
             <span data-bind="text: pageTemplateModuleZone().name"></span>
             <button data-bind="click: actions.drawNewSection, visible: !hasSection()">Draw Selection</button>
             <button data-bind="click: actions.editSection, visible: hasSection()">Edit Selection</button>
+            <button data-bind="click: actions.addModule, visible: hasSection()">Add Module</button>
+
+            <!-- ko if: state.addingModule -->
+            
+            <!-- /ko -->
+
             <!-- /ko -->
         </div>
     </script>
